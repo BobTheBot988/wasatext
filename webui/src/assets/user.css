@@ -1,0 +1,33 @@
+#container-user-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  row-gap: 0.5rem;
+}
+
+#user-info-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#user-profile-picture {
+  height: fit-content;
+  max-height: 11.625rem;
+  width: fit-content;
+  max-width: 8.625rem;
+  border-radius: 50%;
+}
+label#change_pp {
+  align-self: end;
+}
+
+input.modify-info {
+  border: 0;
+}
+
+input.modify-info:hover {
+  box-shadow: 2rem var(--coral-red);
+}

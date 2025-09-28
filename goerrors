@@ -1,0 +1,16 @@
+service/api/cors/utils.go:42:3: ifElseChain: rewrite if-else to switch statement (gocritic)
+		if b >= 'a' && b <= 'z' {
+		^
+service/api/getters.go:39:1: File is not properly formatted (gofmt)
+}
+^
+cmd/webapi/load-configuration.go:44:11: shadow: declaration of "err" shadows declaration at line 42 (govet)
+			usage, err := conf.Usage("CFG", &cfg)
+			       ^
+cmd/webapi/load-configuration.go:59:13: shadow: declaration of "err" shadows declaration at line 55 (govet)
+		yamlFile, err := io.ReadAll(fp)
+		          ^
+4 issues:
+* gocritic: 1
+* gofmt: 1
+* govet: 2

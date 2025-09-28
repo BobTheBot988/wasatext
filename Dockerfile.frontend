@@ -1,0 +1,21 @@
+FROM node:lts AS builder
+
+WORKDIR /src/
+
+COPY ./webui ./webui
+
+WORKDIR /src/webui
+
+
+RUN corepack enable && yarn install --immutable 
+
+RUN yarn build-prod 
+
+FROM nginx:alpine 
+
+COPY --from=builder /src/webui/dist /usr/share/nginx/html 
+
+
+EXPOSE 80
+
+CMD ["nginx","-g","daemon off;"]

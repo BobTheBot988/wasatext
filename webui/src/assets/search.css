@@ -1,0 +1,15 @@
+#search-form {
+    position: sticky;
+    top: 0;
+}
+
+
+
+.form-text {
+    width: 100%;
+}
+
+#search-result {
+    height: fit-content;
+    overflow-y: auto;
+}

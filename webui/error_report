@@ -1,0 +1,17 @@
+[0m[0m
+[0m[4m/home/rob/gits/myProject/webui/public/bootstrap/js/bootstrap.bundle.js[24m[0m
+[0m  [2m2111:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m2408:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m2577:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m2624:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3138:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3200:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3252:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3276:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3411:5[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3752:56[22m  [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3757:7[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m  [2m3762:7[22m   [31merror[39m  Definition for rule 'import/no-unused-modules' was not found  [2mimport/no-unused-modules[22m[0m
+[0m[0m
+[0m[31m[1m✖ 12 problems (12 errors, 0 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

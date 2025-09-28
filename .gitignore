@@ -1,0 +1,7 @@
+.vscode/launch.json
+.golangci.yaml
+./cmd/webapi/webapi
+cmd/webapi/webapi
+images/*.png
+start.sh
+docker-compose.yml

@@ -1,0 +1,18 @@
+.not-found-container {
+    max-width: 37.5rem;
+    margin: 3.75rem auto;
+    text-align: center;
+    padding: 1.25rem;
+}
+
+h1 {
+    margin-bottom: 1.25rem;
+    color: var(--accent-color);
+}
+
+.actions {
+    margin-top: 1.875rem;
+    display: flex;
+    justify-content: center;
+    gap: .9375rem;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "teapot",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "yarn install --immutable --immutable-cache && vite",
+    "build-dev": "yarn install --immutable --immutable-cache && vite build --mode development",
+    "build-prod": "yarn install --immutable --immutable-cache && vite build --mode production",
+    "build-embed": "yarn install --immutable --immutable-cache && vite build --mode production --base=/dashboard/",
+    "preview": "vite preview --port 4173",
+    "lint": "node eslint/bin/eslint.js ."
+  },
+  "dependencies": {
+    "@vueuse/components": "^12.4.0",
+    "axios": "0.28.0",
+    "emoji-mart-vue-fast": "^15.0.4",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.1",
+    "eslint": "9.2.0",
+    "eslint-plugin-vue": "9.25.0",
+    "vite": "^3.0.4"
+  },
+  "packageManager": "yarn@4.5.0"
+}

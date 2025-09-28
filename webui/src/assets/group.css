@@ -1,0 +1,27 @@
+#container-group-info {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#container-group-info > div {
+  max-height: 100%;
+  display: flex;
+  flex-flow: column;
+  border: var(--border-thickness) solid var(--medium-blue);
+  border-radius: var(--border-radius-size);
+  box-shadow: 0.25rem 0.625rem 0.3125rem 0.125rem rgba(0, 0, 0, 0.1);
+}
+
+#group-info-header {
+  display: flex;
+  flex-flow: column;
+  align-content: center;
+  align-items: center;
+}
+#container-group-info .footer {
+  display: flex;
+  flex-flow: column;
+  overflow-y: scroll;
+}

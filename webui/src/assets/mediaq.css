@@ -1,0 +1,16 @@
+@media (width < 1350px) {
+  div#left {
+    width: 17.8rem;
+  }
+}
+@media (width < 1000px) {
+  #app > div {
+    padding: 0 !important;
+  }
+  nav#nav {
+    width: fit-content !important;
+  }
+  nav#nav span {
+    display: none !important;
+  }
+}

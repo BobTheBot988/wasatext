@@ -1,0 +1,60 @@
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# @author ENDERZOMBI102 <enderzombi102.end@gmail.com> 2024
+# @description Config for golangci-lint to conform the Prof's requests, reversed from the checker's errors.
+#
+version: "2"
+run:
+  go: "1.17"
+  relative-path-mode: gitroot
+linters:
+  default: none
+  enable:
+    - errcheck     # checking for unchecked errors
+    - bodyclose    # checks whether HTTP response bodies are always being closed
+    - errname      # checks that sentinel errors are prefixed with the Err and error types are suffixed with the Error
+    - goconst      # finds repeated strings that could be replaced by a constant
+    - gocritic     # computes and checks the cognitive complexity of functions
+    - govet        # Vet examines Go source code and reports suspicious constructs. It is roughly the same as 'go vet' and uses its passes
+    - prealloc     # finds slice declarations that could potentially be preallocated
+    - unused       # checks for unused types, functions, variables and constants
+    - rowserrcheck # sql rows.Err() checks
+    - staticcheck  # simplify code and replacement for `go vet` and `go lint`
+    - errorlint    # find code that will cause problems with Go's error wrapping scheme
+    - ineffassign
+    - wastedassign
+    - reassign
+    - unused
+  settings:
+    gocritic:
+      enabled-checks:
+        # Detects when predeclared identifiers are shadowed in assignments.
+        # https://go-critic.com/overview.html#builtinshadow
+        - builtinShadow
+        # Detects top-level declarations that shadow the predeclared identifiers.
+        # https://go-critic.com/overview.html#builtinshadowdecl
+        - builtinShadowDecl
+        - externalErrorReassign
+    govet:
+      enable:
+        - shadow  ## Check for shadowed variables
+      settings:
+        shadow:
+          strict: true  ## Make the check strict
+  exclusions:
+    generated: lax # skips autogen'd files
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+formatters:
+  enable:
+    - gofmt        # checks if code was formatted correctly
+
+  settings:
+    gofmt:
+      simplify: false

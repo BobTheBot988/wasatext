@@ -1,0 +1,6 @@
+.group_description {
+    max-width: 66ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -1,0 +1,1136 @@
+openapi: 3.0.3
+info:
+  title: WASAText API
+  description: API for WASAText messaging application
+  version: 1.0.0
+tags:
+  - name: login
+    description: Authentication operations
+  - name: users
+    description: User management operations
+  - name: conversations
+    description: Conversation management operations
+  - name: messages
+    description: Message handling operations
+  - name: groups
+    description: Group management operations
+  - name: photos
+    description: Photo management operations
+paths:
+  /session:
+    post:
+      tags: ["login"]
+      summary: Create a new session (login)
+      description: |-
+        If the user does not exist, it will be created,
+        and an identifier is returned.
+        If the user exists, the user identifier is returned.
+      operationId: doLogin
+      requestBody:
+        required: true
+        description: User details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: The user was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "201":
+          description: User log-in action successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/username:
+    post:
+      tags: ["users"]
+      description: Update the username by sending the new one
+      summary: Update your username
+      operationId: setMyUserName
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "204":
+          description: Username updated successfully
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users:
+    get:
+      tags: ["users"]
+      operationId: getUsers
+      description: Get a list of users
+      summary: Get a list of users
+      responses:
+        "200":
+          description: User list
+          content:
+            application/json:
+              schema:
+                description: The object containing the user list
+                type: object
+                properties:
+                  userIdList:
+                    $ref: "#/components/schemas/UserIdList"
+                required:
+                  - userIdList
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/{userId}:
+    get:
+      tags: ["users"]
+      operationId: getUsersNotInConversation
+      description: Get a list of users not already in a conversation
+      summary: Get a list of users 
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: User list
+          content:
+            application/json:
+              schema:
+                description: The object containing the user list
+                type: object
+                properties:
+                  userIdList:
+                    $ref: "#/components/schemas/UserIdList"
+                required:
+                  - userIdList
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+
+  /groups:
+    post:
+      tags: ["groups"]
+      operationId: createGroup
+      summary: Create a new group given at least 2 users
+      description: Create a new group given at least 2 users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - userIdList
+              type: object
+              description: Name of Group & List of users to include in the group
+              properties:
+                name:
+                  $ref: "#/components/schemas/GroupName"
+                userIdList:
+                  $ref: "#/components/schemas/UserIdList"
+      responses:
+        "204":
+          description: Group created
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /groups/{groupId}:
+    get:
+      tags: ["groups"]
+      operationId: getGroupInfo
+      summary: Get the info of a specified group
+      description: Get the description, name and profile picture of a group
+      parameters:
+        - $ref: "#/components/parameters/groupId"
+      responses:
+        "200":
+          description: The group was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupPreview"
+        "404":
+          description: The group was not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /conversations/create:
+    post:
+      tags: ["conversations"]
+      operationId: createConversation
+      summary: Create a new Conversation given 2 users
+      description: Create a new Conversation given 2 users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              description: The object containing the user list
+              type: object
+              properties:
+                userIdList:
+                  $ref: "#/components/schemas/UserIdList"
+      responses:
+        "201":
+          description: Conversation created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Id"
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /groups/{groupId}/photo:
+    get:
+      tags:
+        - "users"
+        - "photos"
+      operationId: getGroupPicture
+      summary: Retrieve group picture
+      description: Retrieve Group picture
+      parameters:
+        - $ref: "#/components/parameters/groupId"
+      responses:
+        "200":
+          description: An Image
+          content:
+            image/png:
+              schema:
+                description: photo
+                type: string
+                format: binary
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/photo:
+    get:
+      tags:
+        - "users"
+        - "photos"
+      operationId: getUserPicture
+      summary: Retrieve user picture
+      description: Retrieve user picture
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: An Image
+          content:
+            image/png:
+              schema:
+                description: photo
+                type: string
+                format: binary
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations:
+    get:
+      tags: ["conversations", "users"]
+      operationId: getMyConversations
+      description: Retrieve a list of your conversations
+      summary: Retrieve a list of your conversations
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: A list of conversations
+          content:
+            application/json:
+              schema:
+                description: Container for the list of user conversations
+                required:
+                  - conversations
+                type: object
+                properties:
+                  conversations:
+                    type: array
+                    description: List of all conversations for the user
+                    minItems: 0
+                    maxItems: 10000
+                    items:
+                      $ref: "#/components/schemas/Conversation"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations/{conversationId}:
+    get:
+      tags: ["conversations"]
+      operationId: getConversation
+      summary: Retrieve a specific conversation
+      description: Retrieve details of a specific conversation by its ID
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/conversationId"
+      responses:
+        "200":
+          description: A specific conversation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Conversation"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /conversations/{conversationId}/messages/{messageId}:
+    get:
+      tags: ["messages", "conversations"]
+      operationId: getMessage
+      summary: Retrieve a specific message
+      description: Retrieve details of a specific message by its ID
+      parameters:
+      - $ref: "#/components/parameters/conversationId"
+      - $ref: "#/components/parameters/messageId"
+      responses:
+        "200":
+            description: A specific message
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                  - message
+                  properties:
+                    message:
+                      $ref: "#/components/schemas/Message"
+        "404":
+         $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/{userId}/conversations/{conversationId}/messages/{messageId}/comments:
+    get:
+      tags: ["messages", "conversations"]
+      operationId: getComments
+      summary: Get the list of comments for the specific message
+      description: Get the list of comments for the specific message 
+      parameters: 
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/conversationId"
+      - $ref: "#/components/parameters/messageId"
+      responses:
+        "200":
+          description: A list of conversations
+          content:
+            application/json:
+              schema:
+                description: The list of comments
+                type: object
+                required:
+                - comments
+                properties:
+                  comments:
+                    $ref: "#/components/schemas/CommentList"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+          
+  /users/{userId}/conversations/{conversationId}/messages/photo:
+    post:
+      tags: ["messages", "conversations"]
+      operationId: sendPhotoMessage
+      summary: Send a new message
+      description: Send a new message in a specific conversation
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/conversationId"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              description: The photo
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+                  description: PNG image to upload
+      responses:
+        "201":
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Id"
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations/{conversationId}/messages:
+    post:
+      tags: ["messages", "conversations"]
+      operationId: sendMessage
+      summary: Send a new message
+      description: Send a new message in a specific conversation
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/conversationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageInput"
+      responses:
+        "201":
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Id"
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/{userId}/conversations/{conversationId}/messages/{messageId}/status:
+    parameters:
+      - $ref: "#/components/parameters/conversationId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/messageId"
+    get:
+      tags: ["messages", "conversations"]
+      summary: Get read status for a message
+      description: Returns which users have read the message
+      operationId: getMessageStatus
+      responses:
+        "200":
+          description: Message read status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageReadStatus"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations/{conversationId}/messages/read/{messageId}:
+    parameters:
+      - $ref: "#/components/parameters/conversationId"
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/messageId"   
+    post:
+      tags: ["messages", "conversations"]
+      operationId: readMessage
+      description: read a message
+      summary: Read a message
+
+      responses:
+        "204":
+          description: Message read successfully
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations/{conversationId}/messages/forward/{messageId}:
+    post:
+      tags: ["messages", "conversations"]
+      operationId: forwardMessage
+      description: Forward a message by sending the respective data
+      summary: Forward a message
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/conversationId"
+        - $ref: "#/components/parameters/messageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Contains information about where to forward the message
+              properties:
+                forwardTo:
+                  $ref: "#/components/schemas/Id"
+      responses:
+        "204":
+          description: Message forwarded successfully
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations/{conversationId}/messages/comments/{messageId}:
+    post:
+      tags: ["messages", "conversations"]
+      operationId: commentMessage
+      description: Comment on a message by sending the right data
+      summary: Comment on a message
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/conversationId"
+        - $ref: "#/components/parameters/messageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Contains the comment text
+              properties:
+                comments:
+                  $ref: "#/components/schemas/CommentList"
+              required:
+                - comments
+      responses:
+        "204":
+          description: The comment was successfully inserted
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations/{conversationId}/messages/{messageId}/comments/{commentId}:
+    delete:
+      tags: ["messages", "conversations", "users"]
+      operationId: uncommentMessage
+      description: Remove a comment from a message by sending a request
+      summary: Remove a comment from a message (uncomment)
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/conversationId"
+        - $ref: "#/components/parameters/messageId"
+        - $ref: "#/components/parameters/commentId"
+      responses:
+        "204":
+          description: Comment removed successfully
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /users/{userId}/conversations/{conversationId}/messages/{messageId}:
+    delete:
+      tags: ["messages", "conversations", "users"]
+      summary: Delete a message
+      description: Delete a message from a conversation
+      operationId: deleteMessage
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/conversationId"
+        - $ref: "#/components/parameters/messageId"
+      responses:
+        "204":
+          description: Message deleted successfully
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /groups/{groupId}/users:
+    parameters:
+      - $ref: "#/components/parameters/groupId"
+    get:
+      tags: ["groups", "users"]
+      summary: Get users of a group
+      description: Make a call to get all of the users in a group
+      operationId: getGroupUsers
+      responses:
+        "200":
+          description: Users found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserListContainer"
+
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /groups/{groupId}/users/{userId}:
+    parameters:
+      - $ref: "#/components/parameters/groupId"
+      - $ref: "#/components/parameters/userId"
+    post:
+      tags: ["groups", "users"]
+      summary: add user to Specified Group
+      description: add user to Specified Group
+      operationId: addToGroup
+      responses:
+        "204":
+          description: User Added
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags: ["groups", "users"]
+      summary: remove user from Specified Group
+      description: remove user from Specified Group
+      operationId: leaveGroup
+      responses:
+        "204":
+          description: User removed
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /groups/{groupId}/desc:
+    parameters:
+      - $ref: "#/components/parameters/groupId"
+    post:
+      tags: ["groups"]
+      summary: Change Group description
+      description: Change Group description
+      operationId: setGroupDesc
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              description: Object containing the Group description
+              type: object
+              properties:
+                desc:
+                  type: string
+                  description: Description for the group
+                  pattern: "^[a-zA-Z0-9._\\!-]+$"
+                  minLength: 1
+                  maxLength: 300
+      responses:
+        "204":
+          description: Username updated successfully
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /groups/{groupId}/name:
+    parameters:
+      - $ref: "#/components/parameters/groupId"
+    post:
+      tags: ["groups"]
+      summary: Change Group name
+      description: Change Group name
+
+      operationId: setGroupName
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              description: Object containing the GroupName
+              type: object
+              properties:
+                groupName:
+                  $ref: "#/components/schemas/GroupName"
+      responses:
+        "204":
+          description: Username updated successfully
+        "400":
+          $ref: "#/components/responses/BadReqError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /photos/{photoId}/users/{userId}/photo:
+    parameters:
+      - $ref: "#/components/parameters/photoId"
+      - $ref: "#/components/parameters/userId"
+    post:
+      tags: ["photos", "users"]
+      summary: Set user photo
+      description: Set user photo
+      operationId: setMyPhoto
+      responses:
+        "200":
+          description: The photo was changed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Photo"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /photos/{photoId}/groups/{groupId}/photo:
+    parameters:
+      - $ref: "#/components/parameters/photoId"
+      - $ref: "#/components/parameters/groupId"
+    post:
+      tags: ["photos", "groups"]
+      summary: Set group photo
+      description: Set group photo
+      operationId: setGroupPhoto
+      responses:
+        "204":
+          description: The photo was changed
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /photos/{photoId}:
+    parameters:
+      - $ref: "#/components/parameters/photoId"
+    get:
+      tags: ["photos", "messages"]
+      summary: Get the photo of the message
+      description: Get the photo of the message
+      operationId: getPhoto
+      responses:
+        "200":
+          description: Take the photo
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+                description: Photo
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+components:
+  schemas:
+    UserList:
+      type: array
+      description: List of user to include in the group
+      minItems: 2
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/User"
+    UserListContainer:
+      type: object
+      description: Container of user list
+      properties:
+        users:
+          $ref: "#/components/schemas/UserList"
+      required:
+        - users
+    Photo:
+      type: object
+      description: Image converted to png
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        path:
+          $ref: "#/components/schemas/Path"
+        image/png:
+          type: string
+          format: binary
+          description: Image converted to png
+        size:
+          type: integer
+          format: int64
+          description: size of the Image
+          minimum: 1
+          maximum: 20000000
+    UserIdList:
+      type: array
+      description: List of user IDs to include in the group
+      minItems: 2
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/UserId"
+    GroupName:
+      type: string
+      description: New name for the group
+      pattern: "^[a-zA-Z0-9._\\!-]+$"
+      minLength: 3
+      maxLength: 300
+      example: "new_group_name"
+    Id:
+      type: integer
+      description: Unique identifier for a user
+      maximum: 10000000
+      minimum: 0
+      format: int64
+    UserId:
+      type: integer
+      description: Unique identifier for a user
+      maximum: 10000000
+      minimum: 0
+      format: int64
+    UserName:
+      type: string
+      description: Username for a user account
+      minLength: 1
+      maxLength: 20
+      pattern: "^[a-zA-Z0-9._\\!-]+$"
+      example: "Rob-_!2."
+    User:
+      type: object
+      description: Represents a user in the system
+      properties:
+        id:
+          $ref: "#/components/schemas/UserId"
+        name:
+          $ref: "#/components/schemas/UserName"
+        photo:
+          type: string
+          description: URL or identifier for user's profile picture
+          pattern: "^.*$"
+          minLength: 1
+          maxLength: 255
+      required:
+        - id
+        - name
+    Error:
+      type: object
+      description: Standard error response object
+      properties:
+        code:
+          type: integer
+          description: Http status code 
+          maximum: 999
+          minimum: 0
+          format: int32
+        message:
+          type: string
+          description: Human-readable error message
+          pattern: "^[a-zA-Z0-9._\\!-]+$"
+          minLength: 1
+          maxLength: 1000
+      required:
+        - code
+        - message
+    Path:
+      type: string
+      description: Path of an os
+      pattern: "^(.+)\\/([^\\/]+)$"
+      minLength: 4
+      maxLength: 100
+    GroupPreview:
+      type: object
+      description: the preview of the group
+      required:
+        - desc
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the conversation or group chat
+          pattern: "^[a-zA-Z0-9._\\!-]+$"
+          minLength: 1
+          maxLength: 50
+        picture:
+          $ref: "#/components/schemas/Path"
+        desc:
+          type: string
+          description: Name of the conversation or group chat
+          pattern: "^.$"
+          minLength: 1
+          maxLength: 300
+    Conversation:
+      type: object
+      description: A conversation between multiple participants, including messages exchanged.
+      required:
+        - name
+        - id
+        - participants
+        - messages
+      properties:
+        name:
+          type: string
+          description: Name of the conversation or group chat
+          pattern: "^[a-zA-Z0-9._\\!-]+$"
+          minLength: 1
+          maxLength: 50
+        id:
+          $ref: "#/components/schemas/Id"
+        participants:
+          type: array
+          description: List of participants in the conversation.
+          minItems: 1
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/User"
+        messages:
+          type: array
+          description: List of messages in the conversation.
+          minItems: 0
+          maxItems: 100000
+          items:
+            $ref: "#/components/schemas/Message"
+        groupId:
+          $ref: "#/components/schemas/Id"
+        userId: 
+          $ref: "#/components/schemas/Id"
+    CommentList:
+      type: array
+      description: List of comments associated with a message
+      minItems: 1
+      maxItems: 100000
+      items:
+        $ref: "#/components/schemas/Comment"
+    Comment:
+      type: object
+      description: the comment of a message
+      required:
+        - content
+        - id
+        - userName
+        - userId
+        - conversationId
+        - messageId
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        content:
+          type: string
+          description: The Content text to add to the message
+          minLength: 1
+          pattern: "^/(\\ud83c[\\ud000-\\udfff]|\\ud83d[\\ud000-\\udfff]|\\ud83e[\\ud000-\\udfff])$"
+          maxLength: 10
+        userName:
+          $ref: "#/components/schemas/UserName"
+        userId:
+          $ref: "#/components/schemas/Id"
+        conversationId:
+          $ref: "#/components/schemas/Id"
+        messageId:
+          $ref: "#/components/schemas/Id"
+
+    Message:
+      type: object
+      description: A message sent between participants in a conversation.
+      required:
+        - comments
+        - id
+        - sender 
+        - conversationId
+        - timestamp
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        sender:
+          $ref: "#/components/schemas/User"
+        conversationId:
+          $ref: "#/components/schemas/Id"
+        comments:
+          $ref: "#/components/schemas/CommentList"
+        timestamp:
+          type: integer
+          description: time stamp
+          maximum: 10000000
+          minimum: 0
+          format: int64
+          example: 123
+        photoId:
+          $ref: "#/components/schemas/Id"
+        repliedId:
+          $ref: "#/components/schemas/Id"
+        repliedConvId:
+          $ref: "#/components/schemas/Id"
+    # Add to components/schemas
+    MessageReadStatus:
+      type: object
+      required:
+        - hasBeenRead
+        - readByUsers
+        - unreadByUsers
+        - messageId
+      description: Records which users have read a specific message
+      properties:
+        hasBeenRead:
+          type: boolean
+          description: The value representing the status of the message
+        messageId:
+          $ref: "#/components/schemas/Id"
+        readByUsers:
+          type: array
+          description: List of users who have read the message
+          maxItems: 300
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/UserId"
+        unreadByUsers:
+          type: array
+          description: List of users who haven't read the message yet
+          maxItems: 300
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/UserId"
+    MessageInput:
+      type: object
+      description: Input data required to send a message.
+      properties:
+        sender:
+          $ref: "#/components/schemas/User"
+        convId:
+          $ref: "#/components/schemas/Id"
+        content:
+          type: string
+          description: Content of the message to be sent
+          minLength: 1
+          pattern: "^[a-zA-Z0-9._\\!-]+$"
+          maxLength: 1000
+      required:
+        - sender
+        - convId
+        - content
+  parameters:
+    userName:
+      required: true
+      name: username
+      in: path
+      description: name of User
+      schema:
+        type: string
+        description: New name for the group
+        pattern: "^[a-zA-Z0-9._\\!-]+$"
+        minLength: 3
+        maxLength: 300
+        example: "new_group_name"
+
+    photoId:
+      name: photoId
+      in: path
+      description: ID of photo
+      required: true
+      schema:
+        $ref: "#/components/schemas/Id"
+
+    userId:
+      name: userId
+      in: path
+      description: ID of User
+      required: true
+      schema:
+        $ref: "#/components/schemas/Id"
+
+    groupId:
+      name: groupId
+      in: path
+      description: ID of group
+      required: true
+      schema:
+        $ref: "#/components/schemas/Id"
+
+    conversationId:
+      name: conversationId
+      in: path
+      description: ID of conversation
+      required: true
+      schema:
+        $ref: "#/components/schemas/Id"
+
+    messageId:
+      name: messageId
+      in: path
+      description: ID of message
+      required: true
+      schema:
+        $ref: "#/components/schemas/Id"
+
+    commentId:
+      name: commentId
+      in: path
+      description: ID of comment
+      required: true
+      schema:
+        $ref: "#/components/schemas/Id"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  responses:
+    BadReqError:
+      description: Bad request 400
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    UnauthorizedError:
+      description: Unauthorized 401
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    InternalServerError:
+      description: Internal Server Error 500
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFoundError:
+      description: Not Found Error 404
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+security:
+  - bearerAuth: []

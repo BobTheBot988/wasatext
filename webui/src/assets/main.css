@@ -1,0 +1,238 @@
+:root {
+  --coral-red: #e63946;
+  --vlight-mint-green: #f1faee;
+  --deep-navy: #1d3557;
+  --medium-blue: #457b9d;
+  --light-teal: #a8dadc;
+
+  --bg-color: var(--vlight-mint-green);
+  --accent-color: var(--coral-red);
+  --header-color: var(--deep-navy);
+
+  --status-indicator-color-low-importance: var(--light-teal);
+  --status-indicator-color-medium-importance: var(--medium-blue);
+  --status-indicator-color-high-importance: var(--coral-red);
+
+  --main-text-color: var(--deep-navy);
+
+  --helper-text-color: var(--medium-blue);
+  --warning-color: var(--accent-color);
+
+  --border-radius-size: 0.3rem;
+  --border-thickness: 0.25rem;
+  --column-gap: 0.5rem;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.noto-color-emoji-regular * {
+  font-family: "Noto Color Emoji", sans-serif !important;
+  font-weight: 400;
+  font-style: normal;
+}
+.truncated_text {
+}
+.feather {
+  /*	width: 24px;
+	height: 24px;*/
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.disabled_div {
+  pointer-events: none;
+  opacity: 0.5;
+  /* Optional: Add additional styles to convey disabled state */
+  color: #999;
+  cursor: not-allowed;
+}
+
+.grid {
+  align-content: start;
+}
+
+.hidden {
+  display: none !important;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+}
+
+#main {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  border: var(--border-thickness) solid var(--deep-navy);
+  border-radius: var(--border-radius-size);
+}
+
+#main #nav {
+  grid-column: 1;
+  grid-area: "a";
+  padding: 0.25rem;
+  width: 15.625rem;
+  background-color: var(--deep-navy);
+  color: var(--vlight-mint-green);
+  padding: 20px 0;
+
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--medium-blue);
+  align-items: center;
+}
+
+#nav h6 > span {
+  color: var(--light-teal);
+}
+
+#nav > div,
+#nav ul {
+  height: 100%;
+}
+
+#nav > div > ul {
+  display: flex;
+  flex-direction: column;
+}
+
+#nav div li > a,
+#nav div li > input {
+  text-decoration: none !important;
+  color: var(--vlight-mint-green);
+  padding: 0;
+}
+
+#nav div li {
+  width: 100%;
+  height: 7%;
+}
+
+#nav div li a:hover,
+#nav div li:hover,
+#nav div li > input:hover {
+  color: var(--accent-color) !important;
+  border: 0;
+}
+.text-truncated {
+  max-width: 66ch !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.username {
+  font-weight: bold;
+  font-size: 20px;
+  color: var(--light-teal);
+  text-decoration: none;
+}
+
+#main .row {
+  height: 100%;
+}
+
+span {
+  font-weight: bold;
+}
+
+textarea:invalid {
+  border: 0.125rem solid var(--warning-color);
+}
+
+.warning,
+.alert {
+  background-color: var(--warning-color);
+  color: var(--vlight-mint-green);
+}
+
+.btn {
+  width: fit-content;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-medium-importance,
+.btn-high-importance {
+  padding: 0.625rem 1.25rem;
+  width: fit-content;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.4s ease-in-out;
+}
+
+.btn-medium-importance {
+  background-color: var(--light-teal);
+  border: 0.0625rem solid var(--accent-color);
+  color: var(--deep-navy);
+}
+
+.btn-medium-importance:hover,
+.btn-high-importance:hover {
+  transform: scale(1.25);
+  border-width: 0.25rem;
+}
+
+.btn-medium-importance:hover {
+  color: var(--coral-red);
+}
+
+.btn-high-importance:hover {
+  color: var(--deep-navy);
+}
+
+.btn-high-importance {
+  background-color: var(--accent-color);
+  color: var(--vlight-mint-green);
+  border: 0.0625rem solid var(--medium-blue);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}

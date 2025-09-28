@@ -1,0 +1,197 @@
+#conversation-view {
+  width: 100%;
+  display: flex;
+  align-content: start;
+}
+
+ul .conv-list-item {
+  margin: 0 !important;
+}
+
+#conversation-view #left {
+  overflow-y: scroll;
+  background: var(--deep-navy);
+  border-right: 0.125rem solid var(--medium-blue);
+  width: 22.5rem;
+}
+
+#conversation-view .chat-name {
+  font-weight: bold;
+  color: var(--deep-navy);
+  margin-bottom: 0.3125rem;
+}
+
+#conversation-view .last-message {
+  color: var(--medium-blue);
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 25rem;
+}
+
+#conversation-view #right {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#conversation {
+  --distance-from-border: 0.5rem;
+  --border-thickness: 0.25rem;
+  --distance-btwn-messages: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+#conv_body,
+#conv_footer {
+  margin-right: var(--distance-from-border);
+  margin-left: var(--distance-from-border);
+}
+
+#conv_body,
+div#conv_footer,
+#conv-header {
+  grid-column: 1/3;
+}
+
+#conv-header {
+  border-radius: 0;
+  grid-row: 1/2;
+  height: 3.75rem;
+  width: 100%;
+  align-self: start;
+  padding: 0.9375rem;
+  font-weight: bold;
+  font-size: 1.125rem;
+
+  color: var(--vlight-mint-green);
+  background-color: var(--deep-navy);
+}
+
+#conv_body {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 1rem;
+  margin: 0;
+
+  display: flex;
+  flex-flow: row;
+
+  background: linear-gradient(200deg, var(--vlight-mint-green), #a8dadc4d);
+}
+
+#conv_footer {
+  height: fit-content;
+  margin: 0;
+  padding: 0.9375rem;
+  background-color: var(--light-teal);
+  border-top: 0.125rem solid var(--medium-blue);
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  align-items: center;
+  color: var(--deep-navy);
+}
+#conv_footer #input-area {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  column-gap: 0.5rem;
+}
+#conv_footer textarea {
+  resize: none;
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 1.25rem;
+  background-color: var(--vlight-mint-green);
+  color: var(--main-text-color);
+  width: 100%;
+  height: 3.375rem;
+}
+
+#conv_footer text::placeholder {
+  color: var(--helper-text-color);
+}
+div#left_msg {
+  height: fit-content;
+}
+div#left_msg label input {
+  background: none;
+  border: none;
+  color: var(--deep-navy);
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+#sub_button {
+  background-color: var(--accent-color);
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--vlight-mint-green);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.125rem;
+  width: fit-content;
+  height: fit-content;
+}
+
+.msg_container {
+  width: fit-content;
+  height: fit-content;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  border-radius: 0.75rem 0.75rem 0 0.75rem;
+}
+
+.msg_container .text {
+  max-width: 66ch;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  /* This allows text to wrap */
+  height: fit-content;
+}
+
+#conv_body ul#message_list {
+  display: flex;
+  flex-flow: column;
+  row-gap: 2rem;
+  min-width: 8.5rem;
+  width: 100%;
+  border-radius: var(--border-radius-size);
+  padding: 0.3rem;
+  height: fit-content;
+}
+#conv_body > button.godown-btn {
+  position: sticky;
+  align-self: flex-end;
+}
+
+ul > .other_msgs {
+  align-self: flex-start;
+  background-color: var(--medium-blue);
+  color: #fff;
+}
+
+ul > .my_msgs {
+  align-self: flex-end;
+  background-color: var(--light-teal);
+  color: var(--deep-navy);
+}

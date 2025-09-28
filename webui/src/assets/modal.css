@@ -1,0 +1,106 @@
+#modal-container-inner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  background-color: rgba(29, 53, 87, 0.5);
+  /* --deep-navy with opacity */
+
+  display: grid;
+  row-gap: 0.5rem;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas:
+    ". a a ."
+    ". a a .";
+  overflow-y: initial !important;
+}
+.my-label {
+  cursor: pointer;
+}
+.my-label > input {
+  display: none;
+}
+#modal {
+  z-index: 999;
+  background-color: var(--bg-color);
+  border: var(--border-thickness) solid var(--medium-blue);
+  border-radius: var(--border-radius-size);
+  box-shadow: 0 4px 8px rgba(29, 53, 87, 0.2);
+  /* Shadow using --deep-navy with opacity */
+  color: var(--main-text-color);
+
+  padding: 1.25rem;
+  width: 20.5rem;
+  height: 20.5rem;
+  overflow-y: scroll;
+  grid-area: a;
+  align-self: center;
+  justify-self: center;
+
+  box-shadow: 0.25rem 0.625rem 0.3125rem 0.125rem rgba(0, 0, 0, 0.1);
+}
+
+#modal-title {
+  color: var(--header-color);
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  top: 0;
+  position: sticky;
+}
+
+#modal #search-form {
+  top: 1rem;
+}
+
+#search-form {
+  display: flex;
+}
+
+#form-text {
+  width: 100%;
+}
+
+#modal #exit-button {
+  background: none;
+  border: none;
+  color: var(--helper-text-color);
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+  width: 10%;
+}
+
+#modal #exit-button:hover {
+  color: var(--vlight-mint-green);
+  background-color: var(--accent-color);
+}
+
+#search-result-item:hover {
+  background-color: #d9d9d9;
+}
+
+li.search-result-item.chosen {
+  background-color: #aaaaaa;
+}
+
+.search-result-button {
+  display: flex;
+  align-items: start;
+  width: 100%;
+}
+
+/*  TODO Animations with Transition*/
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.25s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
+}

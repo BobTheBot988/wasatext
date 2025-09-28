@@ -1,0 +1,84 @@
+IBM OpenAPI Validator (validator: 1.33.4), @Copyright IBM Corporation 2017, 2024.
+
+Validation Results for api.yaml:
+
+Loaded config from `.spectral.js`
+Warnings:
+
+  Message :   String schemas should define property 'minLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./groups/{groupId}/photo.get.responses.200.content.image/png.schema
+  Line    :   207
+
+  Message :   String schemas should define property 'maxLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./groups/{groupId}/photo.get.responses.200.content.image/png.schema
+  Line    :   207
+
+  Message :   String schemas should define property 'minLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./users/{username}/photo.get.responses.200.content.image/png.schema
+  Line    :   229
+
+  Message :   String schemas should define property 'maxLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./users/{username}/photo.get.responses.200.content.image/png.schema
+  Line    :   229
+
+  Message :   String schemas should define property 'minLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./users/{userId}/conversations/{conversationId}/messages/{messageId}/photo.post.requestBody.content.multipart/form-data.schema.properties.imageFile
+  Line    :   310
+
+  Message :   String schemas should define property 'maxLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./users/{userId}/conversations/{conversationId}/messages/{messageId}/photo.post.requestBody.content.multipart/form-data.schema.properties.imageFile
+  Line    :   310
+
+  Message :   Schemas should have a non-empty description
+  Rule    :   ibm-schema-description
+  Path    :   paths./photos/{photoId}.get.responses.200.content.image/png.schema
+  Line    :   683
+
+  Message :   String schemas should define property 'minLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./photos/{photoId}.get.responses.200.content.image/png.schema
+  Line    :   683
+
+  Message :   String schemas should define property 'maxLength'
+  Rule    :   ibm-string-attributes
+  Path    :   paths./photos/{photoId}.get.responses.200.content.image/png.schema
+  Line    :   683
+
+  Message :   Property names must be camel case: image/png
+  Rule    :   ibm-property-casing-convention
+  Path    :   components.schemas.Photo.properties
+  Line    :   711
+
+  Message :   Schema properties should have a non-empty description
+  Rule    :   ibm-property-description
+  Path    :   components.schemas.Photo.properties.image/png
+  Line    :   716
+
+  Message :   String schemas should define property 'minLength'
+  Rule    :   ibm-string-attributes
+  Path    :   components.schemas.Photo.properties.image/png
+  Line    :   716
+
+  Message :   String schemas should define property 'maxLength'
+  Rule    :   ibm-string-attributes
+  Path    :   components.schemas.Photo.properties.image/png
+  Line    :   716
+
+Summary:
+
+  Total number of errors   : 0
+  Total number of warnings : 13
+
+  Warnings:
+   5  (38%) : String schemas should define property 'minLength'
+   5  (38%) : String schemas should define property 'maxLength'
+   1   (8%) : Schemas should have a non-empty description
+   1   (8%) : Property names must be camel case
+   1   (8%) : Schema properties should have a non-empty description
+

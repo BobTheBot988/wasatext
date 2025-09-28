@@ -1,0 +1,19 @@
+FROM golang:1.17 AS builder 
+
+WORKDIR /src
+
+COPY . .
+
+RUN go build -o /app/webapi ./cmd/webapi
+
+FROM debian:bookworm 
+
+WORKDIR /app 
+
+COPY --from=builder /app/webapi ./ 
+
+COPY --from=builder /src/images ./images
+
+EXPOSE 3000 
+
+CMD ["/app/webapi"]

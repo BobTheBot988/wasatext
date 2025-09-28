@@ -1,0 +1,21 @@
+.comment {
+  display: flex;
+  flex-direction: row;
+}
+.comment_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment_button {
+  width: 1rem;
+}
+
+.comment_list_element {
+  background-color: var(--coral-red);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: var(--vlight-mint-green);
+  display: flex;
+  flex-direction: column;
+}
