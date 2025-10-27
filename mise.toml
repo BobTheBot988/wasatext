@@ -1,0 +1,18 @@
+[env]
+WASATEXT_ROOT_DIR = "./"
+[tools]
+go = "1.17"
+yarn = "1.22.22"
+
+[tasks.buildBackEnd]
+alias = "bb"
+run = "go build $WASATEXT_ROOT_DIR/cmd/webapi/main.go"
+[tasks.runBackEnd]
+alias = "rb"
+run = "go build $WASATEXT_ROOT_DIR/cmd/webapi/main.go && ./out"
+[tasks.runFrontend]
+alias = "rf"
+run = "cd $WASATEXT_ROOT_DIR/webui && yarn dev run"
+[tasks.runDocker]
+alias = "dc"
+run = "docker-compose up -d"
